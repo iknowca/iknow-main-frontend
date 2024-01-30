@@ -13,7 +13,8 @@
                             <div class="text-center">
                                 <!-- <router-link to="/find-password">혹시 비밀번호를 잊어버리셨나요?</router-link> -->
                             </div>
-                            <v-btn type="submit" color="primary">Login</v-btn>
+                            <v-btn v-if="!emailValidation" @click="emailValdationRequest" color="primary">Login</v-btn>
+                            <v-btn v-if="emailValidation" type="submit" color="primary">Login</v-btn>
                         </v-form>
                     </v-card-text>
                     <v-card-text class="text-right">
@@ -27,29 +28,47 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import authServerAxios from '@/util/axiosInstances/authServer'
-import {ref} from 'vue'
+import { useStore } from 'vuex';
+import authServerAxios from '@/util/axiosInstances/authServer';
+import { ref } from 'vue';
 
-const router = useRouter()
-const email = ref('')
-const password = ref('')
+const router = useRouter();
+const store = useStore();
+const email = ref('');
+const password = ref('');
 
-const emailValidation = ref(false)
+const emailValidation = ref(false);
+
+const emailValdationRequest = () => {
+    event.preventDefault();
+    authServerAxios.post('/account/validate-email', { email: email.value })
+        .then((result) => {
+            if (result.data === true) {
+                emailValidation.value = true;
+            } else {
+                alert('이메일이 존재하지 않습니다.\n회원가입을 먼저 진행해주세요.');
+            }
+        });
+};
 
 const login = () => {
     event.preventDefault();
-    authServerAxios.post('/account/validate-email', {email: email.value})
-    .then((result)=> {
-        if(result.data === true) {
-            emailValidation.value = true
-        } else {
-            alert('이메일이 존재하지 않습니다.\n회원가입을 먼저 진행해주세요.')
-        }
-    }) 
-}
+    store.dispatch('getToken', { email: email.value, password: password.value })
+        .then((res) => {
+            if (res.data.status === "success") {
+                router.push('/');
+            } else {
+                alert('이메일과 비밀번호를 확인해주세요.');
+                emailValidation.value = false;
+                email.value = '';
+                password.value = '';
+            }
+        });
+
+
+};
 
 const join = () => {
-    router.push('/join')
-}
-
+    router.push('/join');
+};
 </script>
