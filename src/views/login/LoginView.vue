@@ -17,7 +17,7 @@
                         </v-form>
                     </v-card-text>
                     <v-card-text class="text-right">
-                        <!-- 아직 회원가입을 안하셨나요? <router-link to="/signup">Sign up</router-link> -->
+                        아직 회원가입을 안하셨나요? <v-btn variant="plain" @click="join">Join</v-btn>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -26,9 +26,11 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 import authServerAxios from '@/util/axiosInstances/authServer'
 import {ref} from 'vue'
 
+const router = useRouter()
 const email = ref('')
 const password = ref('')
 
@@ -44,6 +46,10 @@ const login = () => {
             alert('이메일이 존재하지 않습니다.\n회원가입을 먼저 진행해주세요.')
         }
     }) 
+}
+
+const join = () => {
+    router.push('/join')
 }
 
 </script>

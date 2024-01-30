@@ -1,5 +1,5 @@
 <template lang="">
-    <v-app-bar app color="#FFCC21">
+    <v-app-bar app color="white" scroll-behavior="elevate">
     
       <v-img @click="router.push('/')" class="mx-2" src="https://see.fontimg.com/api/renderfont4/4B116/eyJyIjoiZnMiLCJoIjoxMDEsInciOjEwMDAsImZzIjoxMDEsImZnYyI6IiMwRTBFMEUiLCJiZ2MiOiIjQjRBRjREIiwidCI6MX0/SUtOT1c/aeroworld-personal-used.png"></v-img>
       <v-spacer></v-spacer>
