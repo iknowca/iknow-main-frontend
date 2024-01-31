@@ -5,6 +5,7 @@ export default createStore({
   state: {
     accessToken: '',
     refreshToken: '',
+    userInfo: {},
   },
   getters: {
   },
@@ -29,6 +30,16 @@ export default createStore({
         return error.response
       }
     },
+    async logout({ commit }) {
+      try {
+        // const response = await authServerAxios.post('/account/logout')
+        commit('setAccessToken', '')
+        commit('setRefreshToken', '')
+        // return response
+      } catch (error) {
+        return error.response
+      }
+    }
   },
   modules: {
   }

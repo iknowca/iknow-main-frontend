@@ -9,7 +9,7 @@
                     <v-card-text>
                         <v-form @submit="login">
                             <v-text-field :disabled="emailValidation" v-model="email" label="email" required variant="outlined" ></v-text-field>
-                            <v-text-field v-if="emailValidation" v-model="password" label="password" required variant="outlined"></v-text-field>
+                            <v-text-field v-if="emailValidation" type="password" v-model="password" label="password" required variant="outlined"></v-text-field>
                             <div class="text-center">
                                 <!-- <router-link to="/find-password">혹시 비밀번호를 잊어버리셨나요?</router-link> -->
                             </div>

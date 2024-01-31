@@ -7,8 +7,11 @@
       <v-btn variant="plain" >
         ABOUT ME
       </v-btn>
-      <v-btn variant="plain" @click="router.push('/login')">
+      <v-btn v-if="!isLogin" variant="plain" @click="router.push('/login')">
         login
+      </v-btn>
+      <v-btn v-if="isLogin" variant="plain" @click="logout">
+        logout
       </v-btn>
       <v-btn variant="plain">
         projects
@@ -18,9 +21,18 @@
       </v-btn>
     </v-app-bar>
 </template>
+
 <script setup>
 import router from "@/router";
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+const store = useStore();
+
+const isLogin = computed(() => store.state.accessToken===''?false:true);
+// const userInfo = computed(() => store.state.userInfo);
+
+const logout = () => {
+    store.dispatch('logout');
+    router.push('/');
+};
 </script>
-<style lang="">
-    
-</style>
