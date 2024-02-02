@@ -7,17 +7,17 @@
       <v-btn variant="plain" @click="router.push('/about-me')" >
         ABOUT ME
       </v-btn>
-      <v-btn v-if="!isLogin" variant="plain" @click="router.push('/login')">
-        login
-      </v-btn>
-      <v-btn v-if="isLogin" variant="plain" @click="logout">
-        logout
-      </v-btn>
       <v-btn variant="plain" @click="router.push('/projects')">
         projects
       </v-btn>
       <v-btn variant="plain" @click="router.push('/contact')">
         contact
+      </v-btn>
+      <v-btn v-if="!isLogin" variant="plain" @click="router.push('/login')">
+        login
+      </v-btn>
+      <v-btn v-if="isLogin" variant="plain" @click="logout">
+        logout
       </v-btn>
     </v-app-bar>
 </template>
