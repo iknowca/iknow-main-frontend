@@ -61,6 +61,14 @@ const join=()=> {
             alert('회원가입에 실패하였습니다.\n이메일과 비밀번호를 확인해주세요.')
         }
     })
+    .catch((err)=> {
+        if (err.response.status === 400 && err.response.data.message  === "이메일 형식이 올바르지 않습니다.") {
+            alert('이메일 형식이 올바르지 않습니다.\n이메일을 다시 확인해주세요.')
+            emailValidation.value = false
+            email.value = ''
+            password.value = ''
+        }
+    })
 }
 </script>
 <style lang="">
