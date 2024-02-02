@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import accountRouter from './account'
+import projectRouter from './project'
 
 const routes = [
   {
@@ -26,7 +27,8 @@ const routes = [
     name: 'contact',
     component: () => import('../views/ContactView.vue')
   },
-  ...accountRouter
+  ...accountRouter,
+  ...projectRouter
 ]
 
 const router = createRouter({
