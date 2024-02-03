@@ -56,7 +56,14 @@ const login = () => {
     store.dispatch('getToken', { email: email.value, password: password.value })
         .then((res) => {
             if (res.data.status === "success") {
-                router.push('/');
+                console.log(store.state.userInfo.nickname)
+                if(store.state.userInfo.nickname === 'AnonymousUser') {
+                    alert("회원가입 이후 처음 로그인하셨습니다.\n 마이페이지에서 정보를 입력해주세요.")
+                    router.push('/account/mypage');
+                }
+                else {
+                    router.push('/');
+                }
             } else {
                 alert('이메일과 비밀번호를 확인해주세요.');
                 emailValidation.value = false;
@@ -64,8 +71,6 @@ const login = () => {
                 password.value = '';
             }
         });
-
-
 };
 
 const join = () => {

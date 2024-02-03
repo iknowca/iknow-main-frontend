@@ -17,11 +17,16 @@
       <v-menu>
         <template v-slot:activator="{props}">
           <v-btn v-if="isLogin" v-bind="props">
-        {{username}} 님 환영합니다
+        {{nickname}} 님 환영합니다
       </v-btn>
         </template>
 
         <v-list> 
+          <v-list-item>
+            <v-btn variant="plain" @click="router.push('/account/mypage')">
+              mypage
+            </v-btn>
+          </v-list-item>
           <v-list-item>
             <v-btn variant="plain" @click="logout">
               logout
@@ -50,5 +55,5 @@ const logout = () => {
   router.push('/');
 };
 
-const username = computed(() => store.state.userInfo.username);
+const nickname = computed(() => store.state.userInfo.nickname);
 </script>
