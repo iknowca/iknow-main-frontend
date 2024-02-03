@@ -1,3 +1,4 @@
+import router from '@/router'
 import authServerAxios from '@/util/axiosInstances/authServer'
 import { createStore } from 'vuex'
 
@@ -5,7 +6,10 @@ export default createStore({
   state: {
     accessToken: '',
     refreshToken: '',
-    userInfo: {},
+    userInfo: {
+      email: '',
+      nickname: '',
+    },
   },
   getters: {
   },
@@ -15,6 +19,15 @@ export default createStore({
     },
     setRefreshToken(state, refreshToken) {
       state.refreshToken = refreshToken
+    },
+    setUserEmail(state, email) {
+      state.userInfo.email = email
+    },
+    setUserId(state, userId) {
+      state.userInfo.userId = userId
+    },
+    setUserNickname(state, nickname) {
+      state.userInfo.nickname = nickname
     }
   },
   actions: {
@@ -25,6 +38,26 @@ export default createStore({
         const refreshToken = response.data.refreshToken
         commit('setAccessToken', accessToken)
         commit('setRefreshToken', refreshToken)
+
+        var token = accessToken.split(' ')[1]
+        var base64Url = token.split('.')[1]
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        }).join(''))
+
+        var userInfoMap = JSON.parse(jsonPayload)
+
+        commit('setUserEmail', userInfoMap.email)
+        commit('setUserId', userInfoMap.accountId)
+        if (userInfoMap.nickname === "") {
+          commit('setUserNickname', 'AnonymousUser')
+          router.push('/account/update-info')
+        } else {
+          commit('setUserNickname', userInfoMap.nickname)
+        }
+
+
         return response
       } catch (error) {
         return error.response
