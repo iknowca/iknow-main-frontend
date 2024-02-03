@@ -13,12 +13,26 @@
       <v-btn variant="plain" @click="router.push('/contact')">
         contact
       </v-btn>
+
+      <v-menu>
+        <template v-slot:activator="{props}">
+          <v-btn v-if="isLogin" v-bind="props">
+        {{username}} 님 환영합니다
+      </v-btn>
+        </template>
+
+        <v-list> 
+          <v-list-item>
+            <v-btn variant="plain" @click="logout">
+              logout
+            </v-btn>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-btn v-if="!isLogin" variant="plain" @click="router.push('/login')">
         login
       </v-btn>
-      <v-btn v-if="isLogin" variant="plain" @click="logout">
-        logout
-      </v-btn>
+      
     </v-app-bar>
 </template>
 
@@ -26,13 +40,15 @@
 import router from "@/router";
 import { useStore } from 'vuex';
 import { computed } from 'vue';
+
 const store = useStore();
 
-const isLogin = computed(() => store.state.accessToken===''?false:true);
-// const userInfo = computed(() => store.state.userInfo);
+const isLogin = computed(() => store.state.accessToken === '' ? false : true);
 
 const logout = () => {
-    store.dispatch('logout');
-    router.push('/');
+  store.dispatch('logout');
+  router.push('/');
 };
+
+const username = computed(() => store.state.userInfo.username);
 </script>
