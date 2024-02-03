@@ -112,7 +112,7 @@
             <div class="ma-4">
               <v-card class="mx-auto" max-width="400px">
 
-                <v-img src="" alt="스터디 사진" class="rounded-xl" ></v-img>
+                <v-img src="../assets/study.png" alt="스터디 사진" class="rounded-xl" ></v-img>
                 <v-container></v-container>
                 <v-container></v-container>
                 <h2>정기 스터디</h2>
