@@ -7,14 +7,16 @@
                         <h1>Login</h1>
                     </v-card-title>
                     <v-card-text>
-                        <v-form @submit="login">
-                            <v-text-field :disabled="emailValidation" v-model="email" label="email" required variant="outlined" ></v-text-field>
-                            <v-text-field v-if="emailValidation" type="password" v-model="password" label="password" required variant="outlined"></v-text-field>
+                        <v-form>
+                            <v-text-field :disabled="emailValidation" v-model="email" label="email" required
+                                variant="outlined"></v-text-field>
+                            <v-text-field v-if="emailValidation" type="password" v-model="password" label="password"
+                                required variant="outlined"></v-text-field>
                             <div class="text-center">
                                 <!-- <router-link to="/find-password">혹시 비밀번호를 잊어버리셨나요?</router-link> -->
                             </div>
                             <v-btn v-if="!emailValidation" @click="emailValdationRequest" color="primary">Login</v-btn>
-                            <v-btn v-if="emailValidation" type="submit" color="primary">Login</v-btn>
+                            <v-btn v-if="emailValidation" @click="login" color="primary">Login</v-btn>
                         </v-form>
                     </v-card-text>
                     <v-card-text class="text-right">
@@ -40,7 +42,6 @@ const password = ref('');
 const emailValidation = ref(false);
 
 const emailValdationRequest = () => {
-    event.preventDefault();
     authServerAxios.post('/account/validate-email', { email: email.value })
         .then((result) => {
             if (result.data === true) {
@@ -52,24 +53,18 @@ const emailValdationRequest = () => {
 };
 
 const login = () => {
-    event.preventDefault();
     store.dispatch('getToken', { email: email.value, password: password.value })
-        .then((res) => {
-            if (res.data.status === "success") {
-                console.log(store.state.userInfo.nickname)
-                if(store.state.userInfo.nickname === 'AnonymousUser') {
-                    alert("회원가입 이후 처음 로그인하셨습니다.\n 마이페이지에서 정보를 입력해주세요.")
-                    router.push('/account/mypage');
-                }
-                else {
-                    router.push('/');
-                }
-            } else {
-                alert('이메일과 비밀번호를 확인해주세요.');
-                emailValidation.value = false;
-                email.value = '';
-                password.value = '';
+        .then(() => {
+            if (store.state.accountInfo.nickname === 'AnonymousUser') {
+                alert("회원가입 이후 처음 로그인하셨습니다.\n 마이페이지에서 정보를 입력해주세요.")
+                store.commit('setNickname', "AnonymousUser")
+                router.push('/account/mypage');
             }
+            else {
+                router.push('/');
+            }
+        }).catch(() => {
+            alert('비밀번호가 일치하지 않습니다.\n비밀번호를 다시 확인해주세요.');
         });
 };
 

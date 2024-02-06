@@ -55,5 +55,5 @@ const logout = () => {
   router.push('/');
 };
 
-const nickname = computed(() => store.state.userInfo.nickname);
+const nickname = computed(() => store.state.accountInfo.nickname);
 </script>
