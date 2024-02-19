@@ -15,10 +15,14 @@
                             <div class="text-center">
                                 <!-- <router-link to="/find-password">혹시 비밀번호를 잊어버리셨나요?</router-link> -->
                             </div>
+                            <div>
+                            <v-btn @click="getOauthtUrl('kakao')">카카오</v-btn>
+                            </div>
                             <v-btn v-if="!emailValidation" @click="emailValdationRequest" color="primary">Login</v-btn>
                             <v-btn v-if="emailValidation" @click="login" color="primary">Login</v-btn>
                         </v-form>
                     </v-card-text>
+
                     <v-card-text class="text-right">
                         아직 회원가입을 안하셨나요? <v-btn variant="plain" @click="join">Join</v-btn>
                     </v-card-text>
@@ -30,14 +34,14 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
 import authServerAxios from '@/util/axiosInstances/authServer';
 import { ref } from 'vue';
+import { useAccountStore } from '@/stores/account';
 
 const router = useRouter();
-const store = useStore();
 const email = ref('');
 const password = ref('');
+const accountStore = useAccountStore()
 
 const emailValidation = ref(false);
 
@@ -53,20 +57,32 @@ const emailValdationRequest = () => {
 };
 
 const login = () => {
-    store.dispatch('getToken', { email: email.value, password: password.value })
-        .then(() => {
-            if (store.state.accountInfo.nickname === 'AnonymousUser') {
-                alert("회원가입 이후 처음 로그인하셨습니다.\n 마이페이지에서 정보를 입력해주세요.")
-                store.commit('setNickname', "AnonymousUser")
-                router.push('/account/mypage');
+    authServerAxios.post("/account/login", { email: email.value, password: password.value }, { withCredentials: true })
+        .then((res) => {
+            if (res.status === 200) {
+                authServerAxios.defaults.headers.common['Authorization'] = `${res.data.accessToken}`;
+                accountStore.setLoginStatus(true);
+                router.push("/");
             }
-            else {
-                router.push('/');
+        }).catch((err) => {
+            if (err.response.status === 401) {
+                alert('로그인에 실패하였습니다.\n이메일과 비밀번호를 확인해주세요.');
+            } else {
+                alert('로그인에 실패하였습니다.\n잠시 후 다시 시도해주세요.');
             }
-        }).catch(() => {
-            alert('비밀번호가 일치하지 않습니다.\n비밀번호를 다시 확인해주세요.');
         });
 };
+
+const getOauthtUrl = (platform) => {
+    authServerAxios.get(`/account/oauth/url/${platform}`)
+        .then((res) => {
+            console.log(res.data.url);
+            window.location.href = res.data.url;
+        })
+        .catch(() => {
+            alert('로그인에 실패하였습니다.\n잠시 후 다시 시도해주세요.');
+        });
+    }
 
 const join = () => {
     router.push('/join');
