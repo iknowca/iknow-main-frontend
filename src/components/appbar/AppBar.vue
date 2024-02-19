@@ -16,7 +16,7 @@
 
       <v-menu>
         <template v-slot:activator="{props}">
-          <v-btn v-if="isLogin" v-bind="props">
+          <v-btn v-if="loginStatus" v-bind="props">
         {{nickname}} 님 환영합니다
       </v-btn>
         </template>
@@ -34,7 +34,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn v-if="!isLogin" variant="plain" @click="router.push('/login')">
+      <v-btn v-if="!loginStatus" variant="plain" @click="router.push('/login')">
         login
       </v-btn>
       
@@ -43,17 +43,39 @@
 
 <script setup>
 import router from "@/router";
-import { useStore } from 'vuex';
+import { useAccountStore } from '@/stores/account';
+import authServerAxios from "@/util/axiosInstances/authServer";
+import { onMounted } from 'vue';
 import { computed } from 'vue';
+import { watch } from 'vue';
 
-const store = useStore();
+const accountStore = useAccountStore();
+const loginStatus = computed(() => accountStore.loginStatus);
+const nickname = computed(() => accountStore.accountInfo.nickname);
 
-const isLogin = computed(() => store.state.accessToken === '' ? false : true);
+onMounted(() => {
+  accountStore.updateLogin();
+})
+
+watch(loginStatus, (newVal) => {
+  if (newVal) {
+    authServerAxios.get('/account')
+      .then((result) => {
+        accountStore.setAccountId(result.data.id);
+        accountStore.setNickname(result.data.nickname);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+})
 
 const logout = () => {
-  store.dispatch('logout');
+  authServerAxios.delete('/account/logout')
+  delete authServerAxios.defaults.headers.common['Authorization'];
+  accountStore.setLoginStatus(false);
+
   router.push('/');
 };
 
-const nickname = computed(() => store.state.accountInfo.nickname);
 </script>
