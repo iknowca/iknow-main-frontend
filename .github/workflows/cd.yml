@@ -36,6 +36,7 @@ jobs:
   deploy:
     needs: build
     name: deploy-app
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy to prod
         uses: appleboy/ssh-action@master
