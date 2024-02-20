@@ -15,11 +15,24 @@
                             <div class="text-center">
                                 <!-- <router-link to="/find-password">혹시 비밀번호를 잊어버리셨나요?</router-link> -->
                             </div>
-                            <div>
-                            <v-btn @click="getOauthtUrl('kakao')">카카오</v-btn>
-                            </div>
+
                             <v-btn v-if="!emailValidation" @click="emailValdationRequest" color="primary">Login</v-btn>
                             <v-btn v-if="emailValidation" @click="login" color="primary">Login</v-btn>
+                            <p class="text-center">sns 계정을 사용해 로그인 해보세요</p>
+                            <div class="">
+                                <v-row class="pa-4 d-flex justify-center">
+                                <v-btn @click="getOauthtUrl('kakao')" icon variant="plain">
+                                    <v-avatar>
+                                        <v-img :src="require('../../assets/KakaoTalk_logo.svg')"></v-img>
+                                    </v-avatar>
+                                </v-btn>
+                                <v-btn @click="googleError" icon variant="plain">
+                                    <v-avatar>
+                                        <v-img :src="require('../../assets/Google__G__logo.png')"></v-img>
+                                    </v-avatar>
+                                </v-btn>
+                            </v-row>
+                            </div>
                         </v-form>
                     </v-card-text>
 
@@ -82,8 +95,11 @@ const getOauthtUrl = (platform) => {
         .catch(() => {
             alert('로그인에 실패하였습니다.\n잠시 후 다시 시도해주세요.');
         });
-    }
+}
 
+const googleError = () => {
+    alert('현재는 kakao만 지원중입니다');
+}
 const join = () => {
     router.push('/join');
 };
