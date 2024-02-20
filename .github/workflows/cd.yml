@@ -45,6 +45,5 @@ jobs:
           username: ${{ secrets.USERNAME_4800H }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            cd ~/imf
             ls
 
