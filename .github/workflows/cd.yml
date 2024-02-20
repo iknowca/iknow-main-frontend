@@ -3,13 +3,13 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - CICD
 
 jobs:
   build:
     name: build-app
     runs-on: ubuntu-latest
-    stpes:
+    steps:
       - name: Checkout
         uses: actions/checkout@v2
 
