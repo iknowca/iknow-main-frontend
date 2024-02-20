@@ -23,3 +23,12 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: SCP Action
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST_4800H }}
+          username: ${{ secrets.USERNAME_4800H }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          source: "./dist/*"
+          target: "~/imf/actions-tmp-repo"
