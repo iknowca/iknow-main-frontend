@@ -32,6 +32,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           source: "./dist/*"
           target: "~/imf"
+      
+      - name: create nginx conf
+        run: |
+          echo "${{ secrets.NGINX_CONF}}" >> ~/imf/conf/nginx.conf
 
       - name: Create .env file
         run: |
