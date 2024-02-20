@@ -31,10 +31,12 @@ jobs:
         run: |
           echo "${{ secrets._ENV_PRODUCTION}}" >> ~/imf/.env.production
       
-      - name: Create docker files
+      - name: Create docker file
         run: |
-          echo "${{ secrets.DOCKER_COMPOSE_YML}}" >> ~/imf/docker-compose.yml
           echo "${{ secrets.DOCKERFILE}}" >> ~/imf/Dockerfile
+      - name: Create docker-compose
+        run: |
+          echo "${{ secrets.DOCKER_COMPOSE}}" >> ~/imf/docker-compose.yml
 
       - name: Build
         run: npm run build
