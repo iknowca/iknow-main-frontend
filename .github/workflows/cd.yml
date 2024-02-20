@@ -31,4 +31,19 @@ jobs:
           username: ${{ secrets.USERNAME_4800H }}
           key: ${{ secrets.PRIVATE_KEY }}
           source: "./dist/*"
-          target: "~/imf/actions-tmp-repo"
+          target: "~/imf
+
+  deploy:
+    needs: build
+    name: deploy-app
+    steps:
+      - name: Deploy to prod
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_4800H }}
+          username: ${{ secrets.USERNAME_4800H }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            cd ~/imf/actions-tmp-repo
+            ls
+
