@@ -23,6 +23,7 @@ jobs:
 
       - name: create nginx conf
         run: |
+          mkdir ~/imf
           mkdir ~/imf/conf
           echo "${{ secrets.NGINX_CONF}}" >> ~/imf/conf/nginx.conf
 
