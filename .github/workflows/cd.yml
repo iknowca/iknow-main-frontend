@@ -31,12 +31,6 @@ jobs:
         run: |
           echo "${{ secrets._ENV_PRODUCTION}}" >> ~/imf/.env.production
       
-      - name: Create docker file
-        run: |
-          echo "${{ secrets.DOCKERFILE}}" >> ~/imf/Dockerfile
-      - name: Create docker-compose
-        run: |
-          echo "${{ secrets.DOCKER_COMPOSE}}" >> ~/imf/docker-compose.yml
 
       - name: Build
         run: npm run build
@@ -47,8 +41,8 @@ jobs:
           host: ${{ secrets.HOST_4800H }}
           username: ${{ secrets.USERNAME_4800H }}
           key: ${{ secrets.PRIVATE_KEY }}
-          source: "./dist/*"
-          target: "~/imf"
+          source: "./dist, ./cicd/*"
+          target: "~/prod/imf"
       
 
 
@@ -65,9 +59,9 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             ls
-            docker-compose -f ~/imf/docker-compose.yml up -d
-            docker image prune -f
-            docker logout
+            # docker-compose -f ~/imf/docker-compose.yml up -d
+            # docker image prune -f
+            # docker logout
 
-            docker-compose up -d
+            # docker-compose up -d
 
