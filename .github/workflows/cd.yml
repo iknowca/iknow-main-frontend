@@ -19,17 +19,11 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
-
-      - name: create nginx conf
-        run: |
-          mkdir ~/imf
-          mkdir ~/imf/conf
-          echo "${{ secrets.NGINX_CONF}}" >> ~/imf/conf/nginx.conf
+        run: npm ci
 
       - name: Create .env file
         run: |
-          echo "${{ secrets._ENV_PRODUCTION}}" >> ~/imf/.env.production
+          echo "${{ secrets._ENV_PRODUCTION}}" >> ~/.env.production
       
 
       - name: Build
