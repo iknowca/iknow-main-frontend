@@ -4,8 +4,8 @@ services:
     image: "nginx:latest"
     container_name: iknow-main-frontend-container
     volumes:
-      - ./conf: /etc/nginx/conf.d
-      - ./dist: /usr/share/nginx/html
+      - ./conf:/etc/nginx/conf.d
+      - ./dist:/usr/share/nginx/html
     ports:
       - "9002:80"
 
