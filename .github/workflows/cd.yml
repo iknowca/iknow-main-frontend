@@ -24,6 +24,8 @@ jobs:
       - name: Create .env file
         run: |
           echo "${{ secrets._ENV_PRODUCTION}}" >> ~/.env.production
+          ls
+          echo .env.production
       
 
       - name: Build
@@ -55,5 +57,5 @@ jobs:
             ls
             cd ~/prod/imf
 
-            docker-compose up -d
+            docker-compose up -d --build
 
