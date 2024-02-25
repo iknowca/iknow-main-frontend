@@ -1,7 +1,7 @@
 <template lang="">
     <div>
-        <h1>구직중입니다!</h1>
-        <h2>언제든지 연락주세요</h2>
+        <h1>저와 함께 할</h1>
+        <h1>멋진 기업을 찾고 있어요!</h1>
         <p>email: iknowca@gmail.com</p>
         <p>phone: 010-2871-2811</p>
         <p>blog: <a href="https://velog.io/@iknow"> link </a></p>

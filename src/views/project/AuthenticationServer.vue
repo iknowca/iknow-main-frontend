@@ -16,16 +16,11 @@
             <li>SpringBoot 3.2.2</li>
             <li>Spring Data JPA</li> - 데이터 베이스를 객체지향적으로 통합하기 위해 사용합니다.
             <li>Spring Security</li> - 회원 인증 및 인가를 위해 사용합니다.
-            <li>Mysql</li> - 회원 정보, 게시글, 댓글 등의 데이터를 저장합니다.
+            <li>Mysql</li> - 회원 정보 등의 데이터를 저장합니다.
             <li>JWT</li> - access token, refresh token을 사용한 회원 인증을 위해 사용합니다.
             <li>Redis</li> - access token, refresh token을 저장하기 위해 사용합니다.
-            <li>AWS
-                <ul>
-                    <li>EC2</li> - 서버를 호스팅하기 위해 사용합니다. (현재는 로컬에서 사용중입니다.)
-                    <li>RDS</li> - Mysql 데이터베이스를 호스팅하기 위해 사용합니다. (현재는 로컬에서 사용중입니다.)
-                </ul>
-            </li>
             <li>Github Actions</li> - CI/CD를 위해 사용합니다.
+            <li>Nginx</li> - API Gateway로 사용합니다.
         </ul>
     </div>
     </div>

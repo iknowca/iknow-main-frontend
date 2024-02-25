@@ -1,24 +1,5 @@
 # iknow-main-frontend
+포트폴리오 프론트엔드입니다.
+[auth-server](https://github.com/iknowca/iknow-authentication-server)의 인증/인가 시스템을 사용합니다.
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+##
